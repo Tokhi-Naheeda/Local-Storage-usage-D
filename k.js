@@ -1,5 +1,5 @@
-// event listener zu form hinzufügen, submit Event
-// rufe addDeveloperToTable auf
+// add event listener to form, submit event
+// call addDeveloperToTable
 const formElement = document.getElementById("form");
 const firstNameElement = document.querySelector("#firstName");
 const lastNameElement = document.querySelector("#lastName");
@@ -11,45 +11,45 @@ formElement.addEventListener("submit", addDeveloperToTable);
 function addDeveloperToTable(event) {
   event.preventDefault();
 
-  // erstelle ein Objekt aus den Werten der Input Felder
+ // create an object from the values ​​of the input fields
   const newDeveloper = {
     firstName: firstNameElement.value,
     lastName: lastNameElement.value,
     programmingLanguage: programmingLanguageElement.value
   }
 
-  // check ob aktuell developers im localStorage null ist
+ // check if developers in localStorage is currently null
   let currentValue = localStorage.getItem("developers");
 
   if (currentValue === null) {
-    // falls ja: füge ein neues Array in den localStorage mit newDeveloper Objekt als Element
+  // if yes: add a new array to the localStorage with newDeveloper object as element
     const developerArr = [newDeveloper];
     localStorage.setItem("developers", JSON.stringify(developerArr));
   } else {
-    // wandele string in Array zurück um
+   // convert string back to array
     currentValue = JSON.parse(currentValue);
     if (Array.isArray(currentValue)) {
-       /*
-      wenn schon ein Array drin ist
-      [{...}, unser neuer kommt hier dazu]
-      */
+     /*
+    if there is already an array in there
+    [{...}, our new one goes here]
+     */
       currentValue.push(newDeveloper);
       localStorage.setItem("developers", JSON.stringify(currentValue))
     }
   }
   formElement.reset();
 }
-// event listener zum reset Button hinzufügen
+// add event listener to reset button
 resetButton.addEventListener("click", clearLocalStorage);
 
 function clearLocalStorage(event) {
   event.preventDefault();
-  // form resetten
+ // reset form
 
-  // developers aus localStorage entfernen
+  // remove developers from localStorage
   localStorage.removeItem("developers");
 }
-// lade Array aus localStorage, zeige developers an
+// load array from localStorage, display developers
 function displayDevelopers() {
     let content = `<tr>
                      <th>First Name</th>
@@ -57,22 +57,25 @@ function displayDevelopers() {
                      <th>Programming Language</th>
                      </tr>`;
   
-    // da dieser HTML Code von uns kommt und nicht vom Benutzer, können wir ihn
-    // sicher einfügen. Den Code vom Benutzer sollten wir aus Sicherheitsgründen
-    // nicht mit innerHTML einfügen
+    // since this HTML code comes from us and not from the user, we can insert it
+   // safely. For security reasons, we should not insert the user's code
+    // with innerHTML
     table.innerHTML = content;
   
     if (localStorage.getItem("developers")) {
       const developerArr = JSON.parse(localStorage.getItem("developers"));
       developerArr.forEach((developer) => {
         const trElement = document.createElement("tr");
-        // pro Eigenschaft die wir anzeigen erstellen wir ein td
-        // ergänze es selber für lastName und programmingLanguage
+
+       // for each property we display we create a td
+      // add it yourself for lastName and programmingLanguage
         const nameElement = document.createElement("td");
         nameElement.innerText = developer.firstName;
-        // füge das td Element dem Elternelement hinzu
+
+      // add the td element to the parent element
         trElement.appendChild(nameElement);
-        // füge die Zeile dem Table hinzu
+
+        // add the row to the table
         table.appendChild(trElement);
       });
     }

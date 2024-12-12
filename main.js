@@ -1,5 +1,4 @@
-//Task-1  Read HTML
-//Task-2
+
 const form=document.querySelector('form');
 const addDeveloperButton=document.querySelector('#send-form');
 const removeDeveloperButton=document.querySelector('#reset-form');
@@ -19,7 +18,8 @@ addDeveloperButton.addEventListener('click', (event) =>{
       console.log(newDeveloper);
       form.firstName.value='';
       form.lastName.value='';
-//Task-3-4
+
+
 console.log('Befor update', JSON.parse(localStorage.getItem('developers'))); //Das hier für Task-4 zum checken
 let developers=localStorage.getItem('developers')
 console.log(localStorage.getItem('developers'));
@@ -34,7 +34,7 @@ console.log('After update', JSON.parse(localStorage.getItem('developers')));
 displayDevelopers();
 });
 
-//Task-6
+
 
 removeDeveloperButton.addEventListener('click', (event) =>{
     event.preventDefault();
@@ -45,7 +45,7 @@ displayDevelopers();
 function displayDevelopers(){
 const developers=JSON.parse(localStorage.getItem('developers'));
 developerList.innerHTML='';
-//making of headerrow
+
 const headerrow=document.createElement('tr');
 const header=['First Name', 'Last Name', 'Programming Language'];
 
@@ -68,15 +68,5 @@ if(developers!==null){
 //taking data from developer for rows
 
 }
-    /*
-    developer.forEach(cellText =>{
-    const cell=document.createElement('td');
-    cell.textContent=cellText;
-    row.appendChild(cell);
-    });
-    developerList.appendChild(row);
-})
 
-};
-*/
 document.addEventListener('DOMContentLoaded',displayDevelopers);
